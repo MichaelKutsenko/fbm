@@ -14,6 +14,7 @@ public class User {
     private String pswrdHash;
     private String email;
     private Set<Card> cards;
+    private Set<Role> roles;
 
     @Id
     @Column(name = "user_id")
@@ -57,6 +58,15 @@ public class User {
         this.cards = cards;
     }
 
+    @ManyToMany(mappedBy = "users")
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Basic
     @Column(name = "email")
     public String getEmail() {
@@ -78,6 +88,7 @@ public class User {
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
         if (pswrdHash != null ? !pswrdHash.equals(user.pswrdHash) : user.pswrdHash != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (roles != null ? roles.equals(user.roles) : user.roles != null) return false;
 
         return true;
     }
@@ -88,6 +99,7 @@ public class User {
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (pswrdHash != null ? pswrdHash.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
 
@@ -99,6 +111,7 @@ public class User {
                 ", pswrdHash='" + pswrdHash + '\'' +
                 ", email='" + email + '\'' +
                 ", cards=" + cards +
+                ", roles=" + roles +
                 '}';
     }
 }
