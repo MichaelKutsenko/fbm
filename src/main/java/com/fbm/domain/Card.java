@@ -1,11 +1,11 @@
-package domain;
+package com.fbm.domain;
 
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Set;
 
 /**
- * Created by Mocart on 06-Jul-17.
+ * Created by Mocart on 09-Jul-17.
  */
 @Entity
 @DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
@@ -14,7 +14,6 @@ import java.util.Set;
 public class Card {
     private long cardId;
     private byte[] photo;
-//    private String descriptor;
     private Player player;
     private Set<User> users;
 
@@ -38,18 +37,27 @@ public class Card {
         this.photo = photo;
     }
 
-//    @Basic
-//    @Column(name = "descriptor")
-//    public String getDescriptor() {
-//        return descriptor;
-//    }
-//
-//    public void setDescriptor(String descriptor) {
-//        this.descriptor = descriptor;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Card card = (Card) o;
+
+        if (cardId != card.cardId) return false;
+        if (!Arrays.equals(photo, card.photo)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (cardId ^ (cardId >>> 32));
+        result = 31 * result + Arrays.hashCode(photo);
+        return result;
+    }
 
     @ManyToOne
-    @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false)
     public Player getPlayer() {
         return player;
     }
@@ -65,37 +73,5 @@ public class Card {
 
     public void setUsers(Set<User> users) {
         this.users = users;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Card card = (Card) o;
-
-        if (cardId != card.cardId) return false;
-        if (!Arrays.equals(photo, card.photo)) return false;
-//        if (descriptor != null ? !descriptor.equals(card.descriptor) : card.descriptor != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (cardId ^ (cardId >>> 32));
-        result = 31 * result + Arrays.hashCode(photo);
-//        result = 31 * result + (descriptor != null ? descriptor.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "cardId=" + cardId +
-//                ", descriptor='" + descriptor + '\'' +
-                ", player=" + player +
-                ", users=" + users +
-                '}';
     }
 }

@@ -1,6 +1,6 @@
-package repository;
+package com.fbm.repository;
 
-import domain.Player;
+import com.fbm.domain.Player;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
     @Override
     List<Player> findAll();
 
-//    List<Player>findByTeam_TeamId(long teamId);
+//    List<Player1>findByTeam_TeamId(long teamId);
 
     List<Player>findByTeam_TeamId(long teamId);
 

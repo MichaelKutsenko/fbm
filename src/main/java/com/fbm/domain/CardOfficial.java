@@ -1,4 +1,4 @@
-package domain;
+package com.fbm.domain;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

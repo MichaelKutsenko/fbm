@@ -1,4 +1,4 @@
-package components;
+package com.fbm.components;
 
 
 import org.slf4j.Logger;

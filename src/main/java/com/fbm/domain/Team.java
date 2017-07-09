@@ -1,10 +1,10 @@
-package domain;
+package com.fbm.domain;
 
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Created by Mocart on 06-Jul-17.
+ * Created by Mocart on 09-Jul-17.
  */
 @Entity
 @Table(name = "teams", schema = "fbm_db", catalog = "")
@@ -34,25 +34,6 @@ public class Team {
         this.name = name;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    @OneToMany(mappedBy = "team")
-    public Set<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Set<Player> players) {
-        this.players = players;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,13 +54,21 @@ public class Team {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Team{" +
-                "teamId=" + teamId +
-                ", name='" + name + '\'' +
-                ", country=" + country +
-                ", players=" + players +
-                '}';
+    @ManyToOne
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    @OneToMany(mappedBy = "team")
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 }

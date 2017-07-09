@@ -1,10 +1,10 @@
-package domain;
+package com.fbm.domain;
 
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Created by Mocart on 06-Jul-17.
+ * Created by Mocart on 09-Jul-17.
  */
 @Entity
 @Table(name = "players", schema = "fbm_db", catalog = "")
@@ -45,25 +45,6 @@ public class Player {
         this.number = number;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    @OneToMany(mappedBy = "player")
-    public Set<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,14 +67,21 @@ public class Player {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "playerId=" + playerId +
-                ", name='" + name + '\'' +
-                ", number=" + number +
-                ", team=" + team +
-                ", cards=" + cards +
-                '}';
+    @ManyToOne
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    @OneToMany(mappedBy = "player")
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
     }
 }

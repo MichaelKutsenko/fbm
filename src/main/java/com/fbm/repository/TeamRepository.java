@@ -1,6 +1,6 @@
-package repository;
+package com.fbm.repository;
 
-import domain.Team;
+import com.fbm.domain.Team;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

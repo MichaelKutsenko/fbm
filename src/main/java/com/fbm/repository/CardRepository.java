@@ -1,6 +1,6 @@
-package repository;
+package com.fbm.repository;
 
-import domain.Card;
+import com.fbm.domain.Card;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
