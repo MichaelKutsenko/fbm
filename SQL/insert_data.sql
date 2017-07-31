@@ -24,12 +24,12 @@ INSERT INTO cards (card_id, player_id, discriminator) VALUES(8, 4, 'CARTOON');
 INSERT INTO cards (card_id, player_id, discriminator) VALUES(9, 5, 'OFFICIAL');
 INSERT INTO cards (card_id, player_id, discriminator) VALUES(10, 5, 'CARTOON');
 
-INSERT INTO roles (role_id, role_name, description) VALUES(1, 'USER', 'user');
-INSERT INTO roles (role_id, role_name, description) VALUES(2, 'ADMIN', 'admin');
+-- # INSERT INTO roles (role_id, role_name, description) VALUES(1, 'USER', 'user');
+-- # INSERT INTO roles (role_id, role_name, description) VALUES(2, 'ADMIN', 'admin');
 
-INSERT INTO users (user_id, role_id, user_name, pswrd_hash) VALUES(1, 1, 'user', "password");
-INSERT INTO users (user_id, role_id, user_name, pswrd_hash) VALUES(2, 1, 'user2', "parol");
-INSERT INTO users (user_id, role_id, user_name, pswrd_hash) VALUES(3, 1, 'admin', "admin");
+INSERT INTO users (user_id, role, user_name, pswrd_hash) VALUES(1, "USER", 'user', "password");
+INSERT INTO users (user_id, role, user_name, pswrd_hash) VALUES(2, "USER", 'user2', "parol");
+INSERT INTO users (user_id, role, user_name, pswrd_hash) VALUES(3, "ADMIN", 'admin', "admin");
 
 INSERT INTO user_card (user_id, card_id) VALUES(1, 1);
 INSERT INTO user_card (user_id, card_id) VALUES(1, 2);

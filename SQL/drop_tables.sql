@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS user_card;
 
 DROP TABLE IF EXISTS users;
 
-DROP table IF EXISTS roles;
+# DROP table IF EXISTS roles;
 
 DROP TABLE IF EXISTS cards;
 

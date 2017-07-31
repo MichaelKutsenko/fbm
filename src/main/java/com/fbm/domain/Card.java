@@ -1,22 +1,20 @@
 package com.fbm.domain;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Set;
 
+import static javax.persistence.FetchType.EAGER;
+
 /**
- * Created by Mocart on 09-Jul-17.
+ * Created by Mocart on 01-Aug-17.
  */
 @Entity
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("CARD")
 @Table(name = "cards", schema = "fbm_db", catalog = "")
 public class Card {
     private long cardId;
-    private byte[] photo;
-    private Player player;
+    private com.fbm.domain.Player Player;
     private Set<User> users;
-
+//todo fix imports. move to the top block
     @Id
     @Column(name = "card_id")
     public long getCardId() {
@@ -27,43 +25,13 @@ public class Card {
         this.cardId = cardId;
     }
 
-    @Basic
-    @Column(name = "photo")
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Card card = (Card) o;
-
-        if (cardId != card.cardId) return false;
-        if (!Arrays.equals(photo, card.photo)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (cardId ^ (cardId >>> 32));
-        result = 31 * result + Arrays.hashCode(photo);
-        return result;
-    }
-
     @ManyToOne
-    public Player getPlayer() {
-        return player;
+    public com.fbm.domain.Player getPlayer() {
+        return Player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayer(com.fbm.domain.Player player) {
+        Player = player;
     }
 
     @ManyToMany(mappedBy = "cards")
@@ -73,5 +41,14 @@ public class Card {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardId=" + cardId +
+                ", Player=" + Player +
+//                ", users=" + users +
+                '}';
     }
 }

@@ -5,11 +5,14 @@
         <class>com.fbm.domain.Card</class>
         <class>com.fbm.domain.Country</class>
         <class>com.fbm.domain.Player</class>
-        <class>com.fbm.domain.Role</class>
         <class>com.fbm.domain.Team</class>
         <class>com.fbm.domain.User</class>
+
         <properties>
 
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/fbm_db"/>
+            <!--<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
+            <!--<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
         </properties>
     </persistence-unit>
 </persistence>

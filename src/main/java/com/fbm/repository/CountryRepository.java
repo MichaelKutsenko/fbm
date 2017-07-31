@@ -1,6 +1,7 @@
 package com.fbm.repository;
 
-import com.fbm.domain.Country;
+
+import com.football.fbm.domain.Country;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

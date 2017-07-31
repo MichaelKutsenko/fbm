@@ -29,28 +29,27 @@ CREATE TABLE IF NOT EXISTS cards (
   card_id       BIGINT      NOT NULL,
   player_id     BIGINT      NOT NULL,
   photo         BLOB DEFAULT NULL,
-  discriminator VARCHAR(16) NOT NULL,
+  discriminator VARCHAR(16),
   PRIMARY KEY (card_id),
   FOREIGN KEY (player_id) REFERENCES players (player_id)
 )ENGINE InnoDB;
 
-#5 create 'role'
-CREATE TABLE IF NOT EXISTS roles (
-  role_id    BIGINT      NOT NULL,
-  role_name  VARCHAR(20) NOT NULL,
-  description VARCHAR(200),
-  PRIMARY KEY (role_id)
-)ENGINE InnoDB;
+-- # #5 create 'role'
+-- # CREATE TABLE IF NOT EXISTS roles (
+-- #   role_id    BIGINT      NOT NULL,
+-- #   role_name  VARCHAR(20) NOT NULL,
+-- #   description VARCHAR(200),
+-- #   PRIMARY KEY (role_id)
+-- # )ENGINE InnoDB;
 
 #6 create 'users'
 CREATE TABLE IF NOT EXISTS users (
   user_id    BIGINT      NOT NULL,
-  role_id BIGINT NOT NULL,
-  user_name  VARCHAR(20) NOT NULL,
+  role       VARCHAR(16)   NOT NULL,
+  user_name  VARCHAR(16) NOT NULL,
   pswrd_hash VARCHAR(64) NOT NULL,
-  email      VARCHAR(20) DEFAULT NULL,
-  PRIMARY KEY (user_id),
-  FOREIGN KEY (role_id) REFERENCES roles (role_id)
+  email      VARCHAR(32) DEFAULT NULL,
+  PRIMARY KEY (user_id)
 )ENGINE InnoDB;
 
 #7 create join table 'user_card'

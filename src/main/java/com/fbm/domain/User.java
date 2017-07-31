@@ -3,17 +3,19 @@ package com.fbm.domain;
 import javax.persistence.*;
 import java.util.Set;
 
+import static javax.persistence.FetchType.EAGER;
+
 /**
- * Created by Mocart on 09-Jul-17.
+ * Created by Mocart on 01-Aug-17.
  */
 @Entity
 @Table(name = "users", schema = "fbm_db", catalog = "")
 public class User {
     private long userId;
+    private String role;
     private String userName;
     private String pswrdHash;
     private String email;
-    private Role role;
     private Set<Card> cards;
 
     @Id
@@ -24,6 +26,16 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "role")
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Basic
@@ -64,6 +76,7 @@ public class User {
         User user = (User) o;
 
         if (userId != user.userId) return false;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
         if (pswrdHash != null ? !pswrdHash.equals(user.pswrdHash) : user.pswrdHash != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
@@ -74,30 +87,40 @@ public class User {
     @Override
     public int hashCode() {
         int result = (int) (userId ^ (userId >>> 32));
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (pswrdHash != null ? pswrdHash.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    public Role getRole() {
-        return role;
-    }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @ManyToMany
     @JoinTable(name = "user_card", catalog = "", schema = "fbm_db",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "card_id", referencedColumnName = "card_id", nullable = false))
+    @ManyToMany(cascade = CascadeType.DETACH, fetch=EAGER)
     public Set<Card> getCards() {
         return cards;
     }
 
+//    @JoinTable(name = "user_group",
+//            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+//            inverseJoinColumns = { @JoinColumn(name = "group_id", referencedColumnName = "group_id")})
+//    @ManyToMany(cascade = CascadeType.DETACH, fetch=EAGER)
+
     public void setCards(Set<Card> cards) {
         this.cards = cards;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", role='" + role + '\'' +
+                ", userName='" + userName + '\'' +
+                ", pswrdHash='" + pswrdHash + '\'' +
+                ", email='" + email + '\'' +
+                ", cards=" + cards +
+                '}';
     }
 }

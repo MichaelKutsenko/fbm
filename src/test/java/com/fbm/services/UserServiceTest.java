@@ -1,5 +1,6 @@
 package com.fbm.services;
 
+import com.fbm.domain.Card;
 import com.fbm.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,36 +10,42 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 /**
- * Created by Mocart on 10-Jul-17.
+ * Created by Mocart on 31-Jul-17.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserServiceTest {
-
+public class UserServiceTest {
     @Autowired
     private UserService userService;
 
 
     @Test
-    void getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public void getAllUsers() throws Exception {
+        System.out.println(userService.getAllUsers());
 
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        assertThat(users.size()).isEqualTo(3);
+        List<User> list = userService.getAllUsers();
+
+        for (Card card : list.get(0).getCards()){
+            System.out.println("hello");
+            System.out.println("hello");
+            System.out.println("hello");
+            System.out.println(card.getPlayer());
+        }
     }
 
     @Test
-    void getUserById() {
+    public void getUserById() throws Exception {
     }
 
     @Test
-    void saveUser() {
+    public void saveUser() throws Exception {
+    }
+
+    @Test
+    public void updateUser() throws Exception {
     }
 
 }

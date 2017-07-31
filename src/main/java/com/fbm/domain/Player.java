@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Created by Mocart on 09-Jul-17.
+ * Created by Mocart on 01-Aug-17.
  */
 @Entity
 @Table(name = "players", schema = "fbm_db", catalog = "")
@@ -83,5 +83,16 @@ public class Player {
 
     public void setCards(Set<Card> cards) {
         this.cards = cards;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "playerId=" + playerId +
+                ", name='" + name + '\'' +
+                ", number=" + number +
+                ", team=" + team +
+                ", cards=" + cards +
+                '}';
     }
 }
