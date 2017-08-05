@@ -1,8 +1,8 @@
 package com.fbm.services;
 
 
-import com.football.fbm.domain.User;
-import com.football.fbm.repository.UserRepository;
+import com.fbm.domain.User;
+import com.fbm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +21,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(long userId) {
+    public User getById(long userId) {
         return userRepository.findOne(userId);
     }
 
-    public User saveUser(User user) {
+    public User addUser(User user) {
         return userRepository.save(user);
     }
 
     public User updateUser(User user) {
         return userRepository.save(user);
+    }
+
+    public void deleteById(long id) {
+        userRepository.delete(id);
+    }
+
+    public void deleteUser(User user) {
+         userRepository.delete(user);
     }
 }

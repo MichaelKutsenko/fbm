@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+
 
 /**
  * Created by Mocart on 31-Jul-17.
@@ -23,17 +25,17 @@ public class UserServiceTest {
 
 
     @Test
+    @Transactional
     public void getAllUsers() throws Exception {
-        System.out.println(userService.getAllUsers());
-
         List<User> list = userService.getAllUsers();
 
-        for (Card card : list.get(0).getCards()){
-            System.out.println("hello");
-            System.out.println("hello");
-            System.out.println("hello");
-            System.out.println(card.getPlayer());
-        }
+        assertThat(list.size()).isEqualTo(3);
+
+        User user = userService.getById(2);
+        userService.deleteById(3);
+        userService.deleteUser(user);
+
+        assertThat(userService.getAllUsers().size()).isEqualTo(1);
     }
 
     @Test

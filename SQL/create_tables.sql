@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS teams (
   team_id    BIGINT      NOT NULL,
   name       VARCHAR(32) NOT NULL,
   country_id BIGINT      NOT NULL,
+  chance     INT DEFAULT 100,
   PRIMARY KEY (team_id),
   FOREIGN KEY (country_id) REFERENCES countries (country_id)
 )ENGINE InnoDB;
@@ -20,6 +21,7 @@ CREATE TABLE IF NOT EXISTS players (
   name      VARCHAR(32) NOT NULL,
   number    DECIMAL     NOT NULL,
   team_id   BIGINT      NOT NULL,
+  chance    INT DEFAULT 100,
   PRIMARY KEY (player_id),
   FOREIGN KEY (team_id) REFERENCES teams (team_id)
 )ENGINE InnoDB;
@@ -29,6 +31,7 @@ CREATE TABLE IF NOT EXISTS cards (
   card_id       BIGINT      NOT NULL,
   player_id     BIGINT      NOT NULL,
   photo         BLOB DEFAULT NULL,
+  chance    INT DEFAULT 100,
   discriminator VARCHAR(16),
   PRIMARY KEY (card_id),
   FOREIGN KEY (player_id) REFERENCES players (player_id)

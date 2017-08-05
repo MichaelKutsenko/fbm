@@ -3,6 +3,8 @@ package com.fbm.domain;
 import javax.persistence.*;
 import java.util.Set;
 
+import static javax.persistence.FetchType.EAGER;
+
 /**
  * Created by Mocart on 01-Aug-17.
  */
@@ -14,6 +16,11 @@ public class Player {
     private int number;
     private Team team;
     private Set<Card> cards;
+    private int chance;
+
+    public Player() {
+        this.chance = 100;
+    }
 
     @Id
     @Column(name = "player_id")
@@ -45,6 +52,16 @@ public class Player {
         this.number = number;
     }
 
+    @Basic
+    @Column(name = "chance")
+    public int getChance() {
+        return chance;
+    }
+
+    public void setChance(int chance) {
+        this.chance = chance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,7 +84,8 @@ public class Player {
         return result;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH, fetch=EAGER)
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     public Team getTeam() {
         return team;
     }
@@ -76,7 +94,7 @@ public class Player {
         this.team = team;
     }
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.DETACH, fetch=EAGER)
     public Set<Card> getCards() {
         return cards;
     }
@@ -91,8 +109,8 @@ public class Player {
                 "playerId=" + playerId +
                 ", name='" + name + '\'' +
                 ", number=" + number +
-                ", team=" + team +
-                ", cards=" + cards +
+                ", team: " + team.getName() +
+                ", cards: " + cards.size() +
                 '}';
     }
 }

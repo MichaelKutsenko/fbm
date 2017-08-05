@@ -6,15 +6,27 @@ import java.util.Set;
 import static javax.persistence.FetchType.EAGER;
 
 /**
- * Created by Mocart on 01-Aug-17.
+ * Represents a player card. Each player have few type of cards (f.e. cartoon card, official card and so on).
+ * Created by Mocart on 09-Jul-17.
+ *
+ * @see CardCartoon
+ * @see CardOfficial
  */
 @Entity
+@DiscriminatorColumn(name="discriminator", discriminatorType=DiscriminatorType.STRING, length=16)
+@DiscriminatorValue("CARD")
 @Table(name = "cards", schema = "fbm_db", catalog = "")
 public class Card {
     private long cardId;
+    //todo fix imports
     private com.fbm.domain.Player Player;
     private Set<User> users;
-//todo fix imports. move to the top block
+    private int chance;
+
+    public Card() {
+        this.chance = 100;
+    }
+
     @Id
     @Column(name = "card_id")
     public long getCardId() {
@@ -25,10 +37,21 @@ public class Card {
         this.cardId = cardId;
     }
 
-    @ManyToOne
+    @Basic
+    @Column(name = "chance")
+    public int getChance() {
+        return chance;
+    }
+
+    public void setChance(int chance) {
+        this.chance = chance;
+    }
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = EAGER)
+    @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false)
     public com.fbm.domain.Player getPlayer() {
         return Player;
-    }
+    } //todo fix imports. move to the top block
 
     public void setPlayer(com.fbm.domain.Player player) {
         Player = player;

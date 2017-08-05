@@ -1,7 +1,8 @@
 package com.fbm.repository;
 
 
-import com.football.fbm.domain.Card;
+import com.fbm.domain.Card;
+import com.fbm.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -15,10 +16,7 @@ public interface CardRepository extends CrudRepository<Card, Long> {
 
     List<Card> findByPlayer_PlayerId(long playerId);
 
-//
-//    List<Card> findByUsers_UserName(String userName);
-//
-//    List<Card> findByUsers_userId(long userId);
-//
-//    List<Card> findAllByUsers_UserIdAnAndAndPlayer_Team_TeamId(long userId, long team);
+    List<Card> findByUsers_userId(long userId);
+
+    List<Card> findByUsers(User user);
 }

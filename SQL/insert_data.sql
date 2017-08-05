@@ -7,6 +7,10 @@ INSERT INTO teams (team_id, name, country_id) VALUES(2, 'arsenal', 2);
 INSERT INTO teams (team_id, name, country_id) VALUES(3, 'bavaria', 3);
 
 INSERT INTO players (player_id, name, number, team_id) VALUES(1, 'misha', 12, 1);
+INSERT INTO players (player_id, name, number, team_id) VALUES(11, 'misha', 11, 1);
+INSERT INTO players (player_id, name, number, team_id) VALUES(111, 'misha', 10, 1);
+INSERT INTO players (player_id, name, number, team_id) VALUES(1111, 'misha', 9, 1);
+INSERT INTO players (player_id, name, number, team_id) VALUES(11111, 'misha', 8, 1);
 INSERT INTO players (player_id, name, number, team_id) VALUES(2, 'vova', 13, 1);
 INSERT INTO players (player_id, name, number, team_id) VALUES(3, 'vasya', 14, 1);
 INSERT INTO players (player_id, name, number, team_id) VALUES(4, 'vasya', 4, 2);
