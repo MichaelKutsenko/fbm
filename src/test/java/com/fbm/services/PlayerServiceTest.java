@@ -33,10 +33,6 @@ public class PlayerServiceTest {
         assertThat(playerService.getByTeamName("dinamo").size()).isEqualTo(7);
         assertThat(playerService.getByTeamName("DinaMo").size()).isEqualTo(7);
         assertThat(playerService.getByTeamName("Dinamo!").size()).isEqualTo(0);
-        System.out.println("==============");
-        System.out.println(playerService.getById(11));
-        System.out.println("==============");
-        System.out.println(playerService.getById(11).getTeam());
         assertThat(playerService.getById(11).getTeam().getName()).isEqualTo("dinamo");
         assertThat(playerService.getById(11).getTeam()).isEqualTo(team);
     }

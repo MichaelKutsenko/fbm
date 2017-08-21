@@ -12,4 +12,8 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("OFFICIAL")
 public class CardOfficial extends Card {
+    @Override
+    public String determinateType() {
+        return "OFFICIAL";
+    }
 }

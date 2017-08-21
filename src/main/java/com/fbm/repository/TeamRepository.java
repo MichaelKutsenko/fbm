@@ -1,7 +1,6 @@
 package com.fbm.repository;
 
 
-import com.fbm.domain.Player;
 import com.fbm.domain.Team;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,4 +19,5 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
     List<Team> findByCountry_CountryName(String countryName);
 
     Team findByName(String name);
+
 }

@@ -31,15 +31,15 @@ public class PlayerService {
         return playerRepository.findByName(name);
     }
 
-    public List<Player> getAllPlayers(){
-        return  playerRepository.findAll();
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
     }
 
-    public List<Player> getByTeamId(long teamId){
+    public List<Player> getByTeamId(long teamId) {
         return playerRepository.findByTeam_TeamId(teamId);
     }
 
-    public List<Player> getByTeamName(String teamName){
+    public List<Player> getByTeamName(String teamName) {
         return playerRepository.findByTeam_Name(teamName);
     }
 }

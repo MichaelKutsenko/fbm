@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationStartListener implements ApplicationListener<ContextRefreshedEvent> {
-    private static final Logger logger =  LoggerFactory.getLogger(ApplicationStartListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationStartListener.class);
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {

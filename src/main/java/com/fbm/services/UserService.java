@@ -17,12 +17,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     public User getById(long userId) {
         return userRepository.findOne(userId);
+    }
+
+    public User getByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 
     public User addUser(User user) {
@@ -38,6 +42,6 @@ public class UserService {
     }
 
     public void deleteUser(User user) {
-         userRepository.delete(user);
+        userRepository.delete(user);
     }
 }

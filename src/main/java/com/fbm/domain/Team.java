@@ -1,6 +1,7 @@
 package com.fbm.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.FetchType.EAGER;
@@ -14,10 +15,10 @@ public class Team {
     private long teamId;
     private String name;
     private Country country;
-    private Set<Player> players;
+    private List<Player> players;
     private int chance;
 
-    public Team () {
+    public Team() {
         chance = 100;
     }
 
@@ -51,6 +52,35 @@ public class Team {
         this.name = name;
     }
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = EAGER)
+    @JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH, fetch = EAGER)
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void addPlayer(Player player) {
+        if (!players.contains(player)){
+            players.add(player);
+
+            if (player.getTeam() != this) {
+                player.setTeam(this);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,25 +99,6 @@ public class Team {
         int result = (int) (teamId ^ (teamId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne(cascade = CascadeType.DETACH, fetch=EAGER)
-    @JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH, fetch=EAGER)
-    public Set<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Set<Player> players) {
-        this.players = players;
     }
 
     @Override

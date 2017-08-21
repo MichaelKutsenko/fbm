@@ -1,6 +1,7 @@
 package com.fbm.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 import static javax.persistence.FetchType.EAGER;
@@ -17,6 +18,7 @@ public class User {
     private String pswrdHash;
     private String email;
     private Set<Card> cards;
+    private long lastRewardDate;
 
     @Id
     @Column(name = "user_id")
@@ -68,6 +70,44 @@ public class User {
         this.email = email;
     }
 
+    @JoinTable(name = "user_card", catalog = "", schema = "fbm_db",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "card_id", referencedColumnName = "card_id", nullable = false))
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = EAGER)
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
+    @Basic
+    @Column(name = "reward_date")
+    public long getLastRewardDate() {
+        return lastRewardDate;
+    }
+
+    public void setLastRewardDate(long lastRewardDate) {
+        this.lastRewardDate = lastRewardDate;
+    }
+
+    public void addCard(Card card) {
+        if (!cards.contains(card)) {
+            cards.add(card);
+            if (!card.getUsers().contains(this)){
+                card.getUsers().add(this);
+            }
+        }
+    }
+
+    public void deleteCard(Card card) {
+        if (cards.contains(card)){
+            cards.remove(card);
+            card.getUsers().remove(this);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,24 +132,6 @@ public class User {
         result = 31 * result + (pswrdHash != null ? pswrdHash.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
-    }
-
-
-    @JoinTable(name = "user_card", catalog = "", schema = "fbm_db",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "card_id", referencedColumnName = "card_id", nullable = false))
-    @ManyToMany(cascade = CascadeType.DETACH, fetch=EAGER)
-    public Set<Card> getCards() {
-        return cards;
-    }
-
-//    @JoinTable(name = "user_group",
-//            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-//            inverseJoinColumns = { @JoinColumn(name = "group_id", referencedColumnName = "group_id")})
-//    @ManyToMany(cascade = CascadeType.DETACH, fetch=EAGER)
-
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.fbm.services;
 
-import com.fbm.domain.Card;
 import com.fbm.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;

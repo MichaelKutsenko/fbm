@@ -1,6 +1,5 @@
 package com.fbm.services;
 
-import com.fbm.domain.Player;
 import com.fbm.domain.Team;
 import com.fbm.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class TeamService {
         return teamRepository.findByName(name);
     }
 
-    public Team getById (long id) {
+    public Team getById(long id) {
         return teamRepository.findOne(id);
     }
 

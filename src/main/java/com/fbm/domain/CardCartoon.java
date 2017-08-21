@@ -13,5 +13,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("CARTOON")
 public class CardCartoon extends Card {
 
-
+    @Override
+    public String determinateType() {
+        return "CARTOON";
+    }
 }

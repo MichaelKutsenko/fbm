@@ -1,7 +1,6 @@
 package com.fbm.services;
 
 import com.fbm.domain.Country;
-import com.fbm.domain.Player;
 import com.fbm.domain.Team;
 import com.fbm.repository.CountryRepository;
 import org.junit.Test;
@@ -41,7 +40,7 @@ public class TeamServiceTest {
         team.setName("name");
         team.setTeamId(100l);
 
-        Team team2= new Team();
+        Team team2 = new Team();
         team2.setCountry(country);
         team2.setName("test name");
         team2.setTeamId(1000l);

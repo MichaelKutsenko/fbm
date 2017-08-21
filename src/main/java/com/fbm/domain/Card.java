@@ -13,18 +13,32 @@ import static javax.persistence.FetchType.EAGER;
  * @see CardOfficial
  */
 @Entity
-@DiscriminatorColumn(name="discriminator", discriminatorType=DiscriminatorType.STRING, length=16)
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING, length = 16)
 @DiscriminatorValue("CARD")
-@Table(name = "cards", schema = "fbm_db", catalog = "")
-public class Card {
+@Table(name = "cards", schema = "fbm_db")
+public class Card implements Comparable<Card>{
     private long cardId;
-    //todo fix imports
-    private com.fbm.domain.Player Player;
+    private Player player;
     private Set<User> users;
     private int chance;
 
+    private Set<UserCard> relations;
+
     public Card() {
         this.chance = 100;
+    }
+
+    public String determinateType() {
+        return "CARD";
+    }
+
+    @OneToMany(mappedBy = "card")
+    public Set<UserCard> getRelations() {
+        return relations;
+    }
+
+    public void setRelations(Set<UserCard> relations) {
+        this.relations = relations;
     }
 
     @Id
@@ -49,12 +63,12 @@ public class Card {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = EAGER)
     @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false)
-    public com.fbm.domain.Player getPlayer() {
-        return Player;
-    } //todo fix imports. move to the top block
+    public Player getPlayer() {
+        return player;
+    }
 
-    public void setPlayer(com.fbm.domain.Player player) {
-        Player = player;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     @ManyToMany(mappedBy = "cards")
@@ -66,11 +80,44 @@ public class Card {
         this.users = users;
     }
 
+    public void addUser(User user) {
+        if (!users.contains(user)){
+            user.addCard(this);
+        }
+    }
+
+    public void delete(User user) {
+        if (users.contains(user)){
+            users.remove(user);
+            user.getCards().remove(this);
+        }
+    }
+
+    @Override
+    public int compareTo(Card other) {
+        return this.determinateType().compareTo(other.determinateType());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Card card = (Card) o;
+
+        return cardId == card.cardId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (cardId ^ (cardId >>> 32));
+    }
+
     @Override
     public String toString() {
         return "Card{" +
                 "cardId=" + cardId +
-                ", Player=" + Player +
+                ", player=" + player +
 //                ", users=" + users +
                 '}';
     }
