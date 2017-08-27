@@ -2,16 +2,13 @@ package com.fbm.domain;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
-
-import static javax.persistence.FetchType.EAGER;
 
 /**
  * Created by Mocart on 01-Aug-17.
  */
 @Entity
 @Table(name = "teams", schema = "fbm_db", catalog = "")
-public class Team {
+public class Team implements Comparable<Team>{
     private long teamId;
     private String name;
     private Country country;
@@ -52,7 +49,7 @@ public class Team {
         this.name = name;
     }
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
     public Country getCountry() {
         return country;
@@ -62,7 +59,7 @@ public class Team {
         this.country = country;
     }
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH, fetch = EAGER)
+    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH)
     public List<Player> getPlayers() {
         return players;
     }
@@ -82,22 +79,25 @@ public class Team {
     }
 
     @Override
+    public int compareTo(Team o) {
+        return this.name.compareTo(o.name);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Team team = (Team) o;
 
-        if (teamId != team.teamId) return false;
-        if (name != null ? !name.equals(team.name) : team.name != null) return false;
-
-        return true;
+        if (!name.equals(team.name)) return false;
+        return country.equals(team.country);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (teamId ^ (teamId >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name.hashCode();
+        result = 31 * result + country.hashCode();
         return result;
     }
 

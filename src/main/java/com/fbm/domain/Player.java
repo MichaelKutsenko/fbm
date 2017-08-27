@@ -3,8 +3,6 @@ package com.fbm.domain;
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.FetchType.EAGER;
-
 /**
  * Created by Mocart on 01-Aug-17.
  */
@@ -14,14 +12,10 @@ public class Player implements Comparable<Player>{
     private long playerId;
     private String name;
     private int number;
-    private Team team;
-    private List<Card> cards;
     private int order;
     private int chance;
-
-    public Player() {
-        this.chance = 100;
-    }
+    private Team team;
+    private List<Card> cards;
 
     @Id
     @Column(name = "player_id")
@@ -73,7 +67,7 @@ public class Player implements Comparable<Player>{
         this.chance = chance;
     }
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     public Team getTeam() {
         return team;
@@ -105,7 +99,7 @@ public class Player implements Comparable<Player>{
         cards.remove(card);
     }
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.DETACH, fetch = EAGER)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.DETACH)
     public List<Card> getCards() {
         return cards;
     }
@@ -126,20 +120,14 @@ public class Player implements Comparable<Player>{
 
         Player player = (Player) o;
 
-//        if (playerId != player.playerId) return false;
-//        if (number != player.number) return false; //todo delete
-//        if (name != null ? !name.equals(player.name) : player.name != null) return false;
-
-//        return true;
-
-        return playerId == player.playerId;
+        if (!name.equals(player.name)) return false;
+        return team.equals(player.team);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (playerId ^ (playerId >>> 32));
-//        result = 31 * result + (name != null ? name.hashCode() : 0);
-//        result = 31 * result + number;
+        int result = name.hashCode();
+        result = 31 * result + team.hashCode();
         return result;
     }
 
@@ -150,7 +138,6 @@ public class Player implements Comparable<Player>{
                 ", name='" + name + '\'' +
                 ", number=" + number +
                 ", team: " + team.getName() +
-                ", cards: " + cards.size() +
                 '}';
     }
 }

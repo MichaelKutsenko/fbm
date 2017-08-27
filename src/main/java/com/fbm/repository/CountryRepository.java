@@ -13,4 +13,6 @@ import java.util.List;
 public interface CountryRepository extends CrudRepository<Country, Long> {
     @Override
     List<Country> findAll();
+
+    Country findByCountryName(String countryName);
 }

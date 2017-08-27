@@ -1,14 +1,18 @@
 package com.fbm.dto;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Mocart on 21-Aug-17.
  */
-public class PlayerDto implements Comparable<PlayerDto> {
+public class PlayerDto {
     private long id;
     private int order;
-    Set<CardDto> cards;
+    private String playerName;
+    private int number;
+    private String teamName;
+    private int chance;
+    private List<CardDto> cards;
 
     public long getId() {
         return id;
@@ -26,17 +30,44 @@ public class PlayerDto implements Comparable<PlayerDto> {
         this.order = order;
     }
 
-    public Set<CardDto> getCards() {
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public int getChance() {
+        return chance;
+    }
+
+    public void setChance(int chance) {
+        this.chance = chance;
+    }
+
+    public List<CardDto> getCards() {
         return cards;
     }
 
-    public void setCards(Set<CardDto> cards) {
+    public void setCards(List<CardDto> cards) {
         this.cards = cards;
-    }
-
-    @Override
-    public int compareTo(PlayerDto other) {
-        return Integer.compare(this.order, other.order);
     }
 
     @Override

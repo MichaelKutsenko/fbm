@@ -23,8 +23,8 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Player getById(long userId) {
-        return playerRepository.findOne(userId);
+    public Player getById(long playerId) {
+        return playerRepository.findOne(playerId);
     }
 
     public Player getByname(String name) {
@@ -41,5 +41,13 @@ public class PlayerService {
 
     public List<Player> getByTeamName(String teamName) {
         return playerRepository.findByTeam_Name(teamName);
+    }
+
+    public Player getByPlayerNameAndTeamName (String playerName, String teamName) {
+        return playerRepository.findByNameAndTeam_Name(playerName, teamName);
+    }
+
+    public void deleteById(long playerId) {
+        playerRepository.delete(playerId);
     }
 }

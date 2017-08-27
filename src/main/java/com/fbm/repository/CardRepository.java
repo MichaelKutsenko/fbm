@@ -21,7 +21,13 @@ public interface CardRepository extends CrudRepository<Card, Long> {
 
     List<Card> findByUsers(User user);
 
-    Set<Card> findByUsers_UserIdAndPlayer_Team_Name(long userId, String teamName);
+    List<Card> findByUsers_UserIdAndPlayer_Team_Name(long userId, String teamName);
+
+    List<Card> findByUsers_UserIdAndPlayer_Team_TeamId(long userId, long teamId);
+
+    List<Card> findByPlayer_Team_TeamId(long teamId);
+
+    Card findCardByChanceAndPlayer_Name(int chance, String playerName);
 
 //    List<Card> findByUser_UserIdAndRelations_isActivated(long userId, boolean isActivated);
 }

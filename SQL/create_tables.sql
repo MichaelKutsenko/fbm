@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS players (
 CREATE TABLE IF NOT EXISTS cards (
   card_id       BIGINT NOT NULL,
   player_id     BIGINT NOT NULL,
-  photo         BLOB    DEFAULT NULL,
+  link         VARCHAR(64)    DEFAULT NULL,
   chance        TINYINT DEFAULT 100,
   discriminator VARCHAR(16),
   PRIMARY KEY (card_id),

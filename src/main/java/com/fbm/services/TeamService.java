@@ -42,4 +42,12 @@ public class TeamService {
     public List<Team> getByCountryId(long countryId) {
         return teamRepository.findByCountry_CountryId(countryId);
     }
+
+    public Team getByTeamNameAndCountryName(String teamName, String countryName) {
+        return teamRepository.findByNameAndCountry_CountryName(teamName, countryName);
+    }
+
+    public void deleteTeamById(long teamId) {
+        teamRepository.delete(teamId);
+    }
 }

@@ -46,8 +46,20 @@ public class CardService {
         return cardRepository.findByUsers(user);
     }
 
-    public Set<Card> getByUserIdAndTeamName(long userId, String teamName) {
+    public List<Card> getByUserIdAndTeamName(long userId, String teamName) {
         return cardRepository.findByUsers_UserIdAndPlayer_Team_Name(userId, teamName);
+    }
+
+    public List<Card> getByUserIdAndTeamId(long userId, long teamId) {
+        return cardRepository.findByUsers_UserIdAndPlayer_Team_TeamId(userId, teamId);
+    }
+
+    public List<Card> getByTeamId(long teamId) {
+        return cardRepository.findByPlayer_Team_TeamId(teamId);
+    }
+
+    public Card getByChanceAndPlayerName(int chanse, String playerName) {
+        return cardRepository.findCardByChanceAndPlayer_Name(chanse, playerName);
     }
 
     public Card addCard(Card card) {
@@ -56,5 +68,9 @@ public class CardService {
 
     public Card updateCard(Card card) {
         return cardRepository.save(card);
+    }
+
+    public void deleteById(long cardId) {
+        cardRepository.delete(cardId);
     }
 }

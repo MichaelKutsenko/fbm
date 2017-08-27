@@ -3,11 +3,12 @@ package com.fbm.dto;
 /**
  * Created by Mocart on 20-Aug-17.
  */
-public class CardDto implements Comparable<CardDto>{
+public class CardDto {
     private long id;
     private String playerName;
-    private String team;
     private String type;
+    private int chance;
+    private String link;
     private boolean isActive;
 
     public long getId() {
@@ -26,14 +27,6 @@ public class CardDto implements Comparable<CardDto>{
         this.playerName = playerName;
     }
 
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
-    }
-
     public String getType() {
         return type;
     }
@@ -42,17 +35,28 @@ public class CardDto implements Comparable<CardDto>{
         this.type = type;
     }
 
+    public int getChance() {
+        return chance;
+    }
+
+    public void setChance(int chance) {
+        this.chance = chance;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public boolean isActive() {
         return isActive;
     }
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    @Override
-    public int compareTo(CardDto other) {
-        return this.type.compareTo(other.type);
     }
 
     @Override

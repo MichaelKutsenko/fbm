@@ -1,9 +1,9 @@
 package com.fbm.domain;
 
+import com.fbm.constants.CardType;
+
 import javax.persistence.*;
 import java.util.Set;
-
-import static javax.persistence.FetchType.EAGER;
 
 /**
  * Represents a player card. Each player have few type of cards (f.e. cartoon card, official card and so on).
@@ -19,18 +19,10 @@ import static javax.persistence.FetchType.EAGER;
 public class Card implements Comparable<Card>{
     private long cardId;
     private Player player;
-    private Set<User> users;
     private int chance;
-
+    private String link;
+    private Set<User> users;
     private Set<UserCard> relations;
-
-    public Card() {
-        this.chance = 100;
-    }
-
-    public String determinateType() {
-        return "CARD";
-    }
 
     @OneToMany(mappedBy = "card")
     public Set<UserCard> getRelations() {
@@ -61,7 +53,7 @@ public class Card implements Comparable<Card>{
         this.chance = chance;
     }
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false)
     public Player getPlayer() {
         return player;
@@ -69,6 +61,16 @@ public class Card implements Comparable<Card>{
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    @Basic
+    @Column(name = "link")
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     @ManyToMany(mappedBy = "cards")
@@ -93,11 +95,16 @@ public class Card implements Comparable<Card>{
         }
     }
 
+    public String determinateType() {
+        return CardType.CARD.getType();
+    }
+
     @Override
     public int compareTo(Card other) {
         return this.determinateType().compareTo(other.determinateType());
     }
 
+    //todo change equals and hashCode()
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,7 +125,6 @@ public class Card implements Comparable<Card>{
         return "Card{" +
                 "cardId=" + cardId +
                 ", player=" + player +
-//                ", users=" + users +
                 '}';
     }
 }

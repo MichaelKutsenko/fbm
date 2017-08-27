@@ -2,16 +2,16 @@ package com.fbm.controllers.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fbm.domain.*;
-import com.fbm.dto.CardDto;
-import com.fbm.dto.ErrorCode;
-import com.fbm.dto.Status;
+import com.fbm.constants.ErrorCode;
 import com.fbm.services.ResponseService;
 import com.fbm.services.TeamService;
 import com.fbm.services.UserCardService;
 import com.fbm.services.UserService;
 import com.fbm.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +23,7 @@ import java.util.*;
  * Created by Mocart on 07-Aug-17.
  */
 @RestController
-@RequestMapping("/reward")
+@RequestMapping("/")
 public class RewardController {
     private static final int COUNT_OF_CARDS = 2;
     private static final int COUNT_OF_REWARD = 3;
@@ -37,15 +37,21 @@ public class RewardController {
     @Autowired
     private ResponseService responseService;
 
-    @RequestMapping(path = "/byId/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getRewardForUser(@PathVariable long userId) throws JsonProcessingException { //todo add exception handler and delete exception from the signature
+    /**
+     * Gets #COUNT_OF_REWARD random cards for user if last reward was got at previous period (not this day)
+     * @param userId The user to be awarded)
+     * @return #COUNT_OF_REWARD random cards of the common set of cards (not depends on user has them)
+     * @throws JsonProcessingException
+     */
+    @RequestMapping(path = "/reward/byId/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity getRewardForUser(@PathVariable long userId) { //todo add exception handler and delete exception from the signature
         User user = userService.getById(userId);
 
         if (checkLastRewardDate(user)) {
-            return responseService.buildErrorResponse(Status.ERROR, ErrorCode.UNFINISHED_PERIOD);
+            return responseService.buildErrorResponse(HttpStatus.FORBIDDEN, ErrorCode.UNFINISHED_PERIOD);
         }
 
-        Set<Card> rewardCards = geRewardCards();
+        List<Card> rewardCards = geRewardCards();
 
         for (Card card : rewardCards) {
             UserCard userCard = userCardService.getByUserIdAndCardIds(userId, card.getCardId());
@@ -65,7 +71,7 @@ public class RewardController {
      * Calculates reward cards according to their chance of being knocked out.
      * @return a set of Cards.
      */
-    private Set<Card> geRewardCards() {
+    private List<Card> geRewardCards() {
         Random random = new Random();
 
         Set<Card> rewardCards = new HashSet<>();
@@ -84,7 +90,10 @@ public class RewardController {
             rewardCards.add(card);
         }
 
-        return rewardCards;
+        List<Card> resultRewardCards = new ArrayList<>();
+        resultRewardCards.addAll(rewardCards);
+
+        return resultRewardCards;
     }
 
     private Team getRandomTeam(Random random, List<Team> teams, int countOfTeams) {

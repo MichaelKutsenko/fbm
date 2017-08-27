@@ -1,5 +1,7 @@
 package com.fbm.domain;
 
+import com.fbm.constants.CardType;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -14,6 +16,6 @@ import javax.persistence.Entity;
 public class CardOfficial extends Card {
     @Override
     public String determinateType() {
-        return "OFFICIAL";
+        return CardType.OFFICIAL.getType();
     }
 }

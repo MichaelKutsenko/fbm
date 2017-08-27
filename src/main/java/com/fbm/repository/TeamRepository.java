@@ -20,4 +20,6 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 
     Team findByName(String name);
 
+    Team findByNameAndCountry_CountryName(String teamName, String countryName);
+
 }

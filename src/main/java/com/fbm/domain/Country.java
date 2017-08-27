@@ -7,8 +7,8 @@ import java.util.Set;
  * Created by Mocart on 01-Aug-17.
  */
 @Entity
-@Table(name = "countries", schema = "fbm_db", catalog = "")
-public class Country {
+@Table(name = "countries", schema = "fbm_db")
+public class Country implements Comparable<Country>{
     private long countryId;
     private String countryName;
     private Set<Team> teams;
@@ -52,23 +52,23 @@ public class Country {
     }
 
     @Override
+    public int compareTo(Country o) {
+        return this.countryName.compareTo(o.countryName);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Country country = (Country) o;
 
-        if (countryId != country.countryId) return false;
-        if (countryName != null ? !countryName.equals(country.countryName) : country.countryName != null) return false;
-
-        return true;
+        return countryName.equals(country.countryName);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (countryId ^ (countryId >>> 32));
-        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
-        return result;
+        return countryName.hashCode();
     }
 
     @Override

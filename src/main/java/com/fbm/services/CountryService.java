@@ -19,7 +19,24 @@ public class CountryService {
         return countryRepository.findAll();
     }
 
+    public Country getByName(String countryName) {
+        return countryRepository.findByCountryName(countryName);
+    }
+
+    public Country getById(long countryId) {
+        return countryRepository.findOne(countryId);
+    }
+
     public Country addCountry(Country country) {
         return countryRepository.save(country);
     }
+
+    public Country updateCountry(Country country) {
+        return countryRepository.save(country);
+    }
+
+    public void deleteCountryById(long countryId) {
+        countryRepository.delete(countryId);
+    }
+
 }
